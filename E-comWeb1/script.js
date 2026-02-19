@@ -67,7 +67,7 @@ const products = [
 let cart = [];
 
 // Initialize
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initNavbar();
     initMobileMenu();
     initCart();
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Navbar scroll effect
 function initNavbar() {
     const navbar = document.getElementById('navbar');
-    
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
@@ -93,7 +93,7 @@ function initNavbar() {
 function initMobileMenu() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navLinks = document.getElementById('navLinks');
-    
+
     if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
@@ -108,12 +108,12 @@ function initCart() {
     const cartSidebar = document.getElementById('cartSidebar');
     const closeCart = document.getElementById('closeCart');
     const overlay = document.getElementById('overlay');
-    
+
     cartBtn.addEventListener('click', () => {
         cartSidebar.classList.add('active');
         overlay.classList.add('active');
     });
-    
+
     closeCart.addEventListener('click', closeCartSidebar);
     overlay.addEventListener('click', closeCartSidebar);
 }
@@ -121,7 +121,7 @@ function initCart() {
 function closeCartSidebar() {
     const cartSidebar = document.getElementById('cartSidebar');
     const overlay = document.getElementById('overlay');
-    
+
     cartSidebar.classList.remove('active');
     overlay.classList.remove('active');
 }
@@ -129,7 +129,7 @@ function closeCartSidebar() {
 // Load products
 function loadProducts() {
     const productsGrid = document.getElementById('productsGrid');
-    
+
     products.forEach(product => {
         const productCard = createProductCard(product);
         productsGrid.appendChild(productCard);
@@ -173,7 +173,7 @@ function createProductCard(product) {
             </button>
         </div>
     `;
-    
+
     return card;
 }
 
@@ -182,24 +182,24 @@ function generateStars(rating) {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
     let stars = '';
-    
+
     for (let i = 0; i < fullStars; i++) {
         stars += '★';
     }
-    
+
     if (hasHalfStar) {
         stars += '⯨';
     }
-    
+
     return stars;
 }
 
 // Add to cart
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
-    
+
     const existingItem = cart.find(item => item.id === productId);
-    
+
     if (existingItem) {
         existingItem.quantity++;
     } else {
@@ -208,7 +208,7 @@ function addToCart(productId) {
             quantity: 1
         });
     }
-    
+
     updateCart();
     showNotification('Product added to cart!');
 }
@@ -218,15 +218,15 @@ function updateCart() {
     const cartItems = document.getElementById('cartItems');
     const cartCount = document.querySelector('.cart-count');
     const totalAmount = document.querySelector('.total-amount');
-    
+
     // Update cart count
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     cartCount.textContent = totalItems;
-    
+
     // Calculate total
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     totalAmount.textContent = `$${total.toFixed(2)}`;
-    
+
     // Update cart items
     if (cart.length === 0) {
         cartItems.innerHTML = `
@@ -263,10 +263,10 @@ function updateCart() {
 // Update quantity
 function updateQuantity(productId, change) {
     const item = cart.find(item => item.id === productId);
-    
+
     if (item) {
         item.quantity += change;
-        
+
         if (item.quantity <= 0) {
             removeFromCart(productId);
         } else {
@@ -296,7 +296,7 @@ function quickView(productId) {
 // Newsletter
 function initNewsletter() {
     const form = document.getElementById('newsletterForm');
-    
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const email = form.querySelector('input[type="email"]').value;
@@ -321,9 +321,9 @@ function showNotification(message) {
         animation: slideIn 0.3s ease-out;
     `;
     notification.textContent = message;
-    
+
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.style.animation = 'slideOut 0.3s ease-out';
         setTimeout(() => notification.remove(), 300);
@@ -363,7 +363,7 @@ function initScrollAnimations() {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -372,7 +372,7 @@ function initScrollAnimations() {
             }
         });
     }, observerOptions);
-    
+
     // Observe elements
     document.querySelectorAll('.feature-card, .product-card, .collection-card').forEach(el => {
         el.style.opacity = '0';
